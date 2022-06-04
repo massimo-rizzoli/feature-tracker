@@ -109,26 +109,26 @@ The following command will perform feature tracking using the Lucas-Kanade track
 
 ```
 python -m featuretrack \
-  --video /path/to/video.mp4 \
-  lk \
-  gft
+       --video /path/to/video.mp4 \
+       lk \
+       gft
 ```
 
 The following command will instead perform feature tracking and predict the next positions of feature points extracted by the SIFT algorithm
 
 ```
 python -m featuretrack \
-  --video /path/to/video.mp4 \
-  kalman \
-  sift
+       --video /path/to/video.mp4 \
+       kalman \
+       sift
 ```
 
 The following command will perform feature tracking by brute force matching SIFT feature points based on the L2 distance of the relative feature descriptors
 
 ```
 python -m featuretrack \
-  --video /path/to/video.mp4 \
-  sift
+       --video /path/to/video.mp4 \
+       sift
 ```
 
 **Note:** if the video is too large, you can use the global `--scale` option to resize it.
@@ -140,14 +140,14 @@ The following command will perform feature tracking using the Lucas-Kanade track
 
 ```
 python -m featuretrack \
-  --video /path/to/video.mp4 \
-  --scale .2 .2 \
-  --framerate 60 \
-  --output out_video \
-  lk \
-  --interval 60 \
-  gft \
-  --points 100 \
-  --quality 0.2 \
-  --distance 10 \
+       --video /path/to/video.mp4 \
+       --scale .2 .2 \
+       --framerate 60 \
+       --output out_video \
+       lk \
+       --interval 60 \
+       gft \
+       --points 100 \
+       --quality 0.2 \
+       --distance 10 \
 ```
