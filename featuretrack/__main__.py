@@ -27,12 +27,15 @@ def main():
   else:
     args.writer = None
 
-  if args.features == 'gft':
+  if 'features' not in vars(args):
+    parser.print_help()
+    exit(1)
+  elif args.features == 'gft':
     args.fe = GoodFeaturesToTrackFE(args.points, args.quality, args.distance, args.size)
   elif args.features == 'sift':
     args.fe = SIFTFE(args.points)
   else:
-    parser.print_usage()
+    parser.print_help()
     parser.exit(1)
 
   args.func(args)
