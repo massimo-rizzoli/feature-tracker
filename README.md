@@ -91,7 +91,7 @@ To show the help message for the tracking algorithm component, run
 python -m featuretrack <tracking algorithm> --help
 ```
 
-where `<tracking algorithm>` is either `sift`, `lk` or `kalman`.
+where `<tracking algorithm>` is either `siftbf`, `lk` or `kalman`.
 
 To show the help message for the feature detector component, run
 
@@ -128,7 +128,7 @@ The following command will perform feature tracking by brute force matching SIFT
 ```
 python -m featuretrack \
        --video /path/to/video.mp4 \
-       sift
+       siftbf
 ```
 
 **Note:** if the video is too large, you can use the global `--scale` option to resize it.
@@ -136,18 +136,19 @@ python -m featuretrack \
 
 #### Detailed
 
-The following command will perform feature tracking using the Lucas-Kanade tracking algorithm and Good Features to Track feature points on the `video.mp4` video file located at `/path/to/`, scaling the video respectively to 20% of height and 20% of width, utilising a framerate of 60fps, saving the output to `./results/out_video.avi`, tracking the points for 60 frames before resetting, detecting at most 100 points having at least 20% of the quality of the best point and having a distance of at least 10 pixels between eachother.
+The following command will perform feature tracking using the Lucas-Kanade tracking algorithm and Good Features to Track feature points on the `video.mp4` video file located at `/path/to/`, scaling the video respectively to 20% of height and 20% of width, waiting 16ms between each frame (in addition to processing time), saving the output to `./results/out_video.avi` with a framerate of 30fps, tracking the points for 60 frames before resetting, detecting at most 100 points having at least 20% of the quality of the best point and having a distance of at least 10 pixels between eachother.
 
 ```
 python -m featuretrack \
        --video /path/to/video.mp4 \
        --scale .2 .2 \
-       --framerate 60 \
+       --delay 16 \
        --output out_video \
+       --framerate 30 \
        lk \
        --interval 60 \
        gft \
        --points 100 \
        --quality 0.2 \
-       --distance 10 \
+       --distance 10
 ```

@@ -1,10 +1,8 @@
 from cv2 import cv2 as cv
+from os import path
 from featuretrack.parsers import prepare_parser
 from featuretrack.detectors.detectors import GoodFeaturesToTrackFE, SIFTFE
 from featuretrack.video_writer import VideoWriter
-
-def filename_from_args(args):
-  return 'test'
 
 def main():
   parser = prepare_parser()
@@ -12,18 +10,22 @@ def main():
   args = parser.parse_args()
 
   # calculate and scale resolution
+  if not path.exists(args.video):
+    print(f'Video path \'{args.video}\' does not exists')
+    parser.exit(1)
   tmp_cap = cv.VideoCapture(args.video)
   _, frame = tmp_cap.read()
   tmp_cap.release()
   args.resolution = (round(frame.shape[1]*args.scale[1]),round(frame.shape[0]*args.scale[0]))
+  writer_res = args.resolution
+  # triplicate width for sift brute force windows
+  if 'hidematch' in vars(args) and not args.hidematch:
+    writer_res = (args.resolution[0]*3, args.resolution[1])
 
   args.cap = cv.VideoCapture(args.video)
 
-  # TODO check if formula correct
-  args.delay = round(1/args.framerate * 1000)
-
   if args.output:
-    args.writer = VideoWriter(''.join(['./results/', args.output]), args.framerate/2, args.resolution)
+    args.writer = VideoWriter(''.join(['./results/', args.output]), args.framerate, writer_res)
   else:
     args.writer = None
 

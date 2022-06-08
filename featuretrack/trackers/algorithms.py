@@ -28,7 +28,6 @@ def lucas_kanade(args):
     prev_points = points
 
     np_points = points.astype(int)
-    print(len(np_points))
     step = 255/len(np_points)
     for i, point in enumerate(np_points):
       x, y = point
@@ -48,10 +47,11 @@ def lucas_kanade(args):
     args.writer.release()
 
 
-def sift(args):
+def siftbf(args):
   cap = args.cap
   fe = args.fe
   tracker = SIFTTracker(args.points, args.thresh, fe)
+  img_display = None
 
   t = 0
   while cap.isOpened():
@@ -61,8 +61,8 @@ def sift(args):
     if key == ord('q') or not ret:
       cap.release()
       break
-    elif key == ord(' '):
-      # pause
+    # Press space to pause to better see the matches
+    if not args.hidematch and key == ord(' '):
       print('Press <space> to resume...')
       while cv.waitKey(1000) != ord(' '):
         pass
@@ -76,23 +76,26 @@ def sift(args):
       prev_frame = frame.copy()
     else:
       points, curr_kp, curr_desc, good_matches = tracker.predict(prev_desc, frame)
-      img_match = cv.drawMatches(img1=prev_frame, keypoints1=keypoints, img2=frame,
-                                 keypoints2=curr_kp, matches1to2=good_matches, outImg=None,
-                                 flags=cv.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS)
+      if not args.hidematch:
+        img_match = cv.drawMatches(img1=prev_frame, keypoints1=keypoints, img2=frame,
+                                   keypoints2=curr_kp, matches1to2=good_matches, outImg=None,
+                                   flags=cv.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS)
       np_points = points.astype(int)
-      print(len(np_points))
       for point in np_points:
         x, y = point
         colour = np.array([0, 0, 200], dtype=np.float64)
         cv.circle(frame_copy, (x,y), args.radious, colour, thickness=args.thickness)
 
-      img_display = np.concatenate((img_match, frame_copy), axis=1)
+      if not args.hidematch:
+        img_display = np.concatenate((img_match, frame_copy), axis=1)
+      else:
+        img_display = frame_copy
       name = f'SIFT'
       cv.namedWindow(name, cv.WINDOW_AUTOSIZE)
       cv.imshow(name, img_display)
 
-    if args.writer:
-      args.writer.write(frame_copy)
+    if args.writer and t != 0:
+      args.writer.write(img_display)
 
     prev_desc = desc
     t += 1
@@ -135,8 +138,6 @@ def kalman(args):
 
     np_points = points.astype(int)
     np_pred_points = pred_points.astype(int)
-    print(len(np_points))
-    print(len(np_pred_points))
     red = np.array([0,0,200], dtype=np.float64)
     green = np.array([0,200,0], dtype=np.float64)
     for point, pred_point in zip(np_points, np_pred_points):
