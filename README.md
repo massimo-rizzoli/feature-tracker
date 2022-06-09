@@ -21,6 +21,12 @@ If this is not the case you can skip to the [Install Requirements](#install-requ
 
 #### With Pyenv (Recommended)
 
+Install pytnon 3.9.7 with pyenv
+
+```
+pyenv install 3.9.7
+```
+
 Create a python 3.9.7 virtual environment named `feature-tracker-env`
 
 ```
