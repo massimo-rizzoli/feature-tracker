@@ -79,8 +79,7 @@ def add_kalman_subparser(subparsers):
 def prepare_parser():
   parser = argparse.ArgumentParser(description='Track features using different tracking algorithms combined with different feature detectors',
                                    prog='python -m featuretrack')
-  # TODO remove default
-  parser.add_argument('-v', '--video', default='./source_videos/Contesto_industriale1.mp4', type=str,
+  parser.add_argument('-v', '--video', type=str, required=True,
                       help='Path to the video on which to perform tracking')
   parser.add_argument('-d', '--delay', default=1, type=int,
                       help='Delay (ms) in between frames (influences video preview framerate) [default: 1 (minimum possible delay)]')

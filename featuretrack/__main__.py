@@ -15,7 +15,7 @@ def main():
 
   # calculate and scale resolution
   if not path.exists(args.video):
-    print(f'Video path \'{args.video}\' does not exists')
+    print(f'Video path \'{args.video}\' does not exist')
     parser.exit(1)
   tmp_cap = cv.VideoCapture(args.video)
   _, frame = tmp_cap.read()
