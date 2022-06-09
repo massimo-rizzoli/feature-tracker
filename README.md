@@ -136,7 +136,7 @@ python -m featuretrack \
 
 #### Detailed
 
-The following command will perform feature tracking using the Lucas-Kanade tracking algorithm and Good Features to Track feature points on the `video.mp4` video file located at `/path/to/`, scaling the video respectively to 20% of height and 20% of width, waiting 16ms between each frame (in addition to processing time), saving the output to `./results/out_video.avi` with a framerate of 30fps, tracking the points for 60 frames before resetting, detecting at most 100 points having at least 20% of the quality of the best point and having a distance of at least 10 pixels between eachother.
+The following command will perform feature tracking using the Lucas-Kanade tracking algorithm and Good Features to Track feature points on the `video.mp4` video file located at `/path/to/`, scaling the video respectively to 20% of height and 20% of width, waiting 16ms between each frame (in addition to processing time with the purpose of showing the processing at 30fps, otherwise it would be faster than real time), saving the output to `./results/out_video.avi` with the specified framerate of 30fps, tracking the points for 60 frames before resetting, detecting at most 100 points having at least 20% of the quality of the best point and having a distance of at least 10 pixels between eachother.
 
 ```
 python -m featuretrack \

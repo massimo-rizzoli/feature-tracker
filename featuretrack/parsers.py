@@ -82,9 +82,9 @@ def prepare_parser():
   # TODO remove default
   parser.add_argument('-v', '--video', default='./source_videos/Contesto_industriale1.mp4', type=str,
                       help='Path to the video on which to perform tracking')
-  parser.add_argument('-d', '--delay', default=16, type=int,
-                      help='Delay (ms) in between frames (influences video preview framerate) [default: 16]')
-  parser.add_argument('--scale', nargs=2, default=[1,1], type=float, metavar=('H_SCALE', 'W_SCALE'),
+  parser.add_argument('-d', '--delay', default=1, type=int,
+                      help='Delay (ms) in between frames (influences video preview framerate) [default: 1 (minimum possible delay)]')
+  parser.add_argument('-s','--scale', nargs=2, default=[1,1], type=float, metavar=('H_SCALE', 'W_SCALE'),
                       help='Scaling factors to be applyed respectively to the height and the width of the video [default: 1 1]')
   parser.add_argument('-o','--output', type=str,
                       help='Output file name: the video will be saved as \'./results/OUTPUT.avi\'')

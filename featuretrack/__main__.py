@@ -3,11 +3,15 @@ from os import path
 from featuretrack.parsers import prepare_parser
 from featuretrack.detectors.detectors import GoodFeaturesToTrackFE, SIFTFE
 from featuretrack.video_writer import VideoWriter
+from time import time
 
 def main():
   parser = prepare_parser()
 
   args = parser.parse_args()
+
+  # force minimum to 1
+  args.delay = max(1, args.delay)
 
   # calculate and scale resolution
   if not path.exists(args.video):
@@ -43,4 +47,7 @@ def main():
   args.func(args)
 
 if __name__ == '__main__':
+  start = time()
   main()
+  end = time()
+  print(f'Wall Time Clock: {end-start:.2f}s')
